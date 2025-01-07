@@ -1,0 +1,1466 @@
+тестовый модуль проекта:
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
+using Tyuiu.IvanovSI.Sprint7.Project0.V2.Lib;
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2.Test
+{
+    [TestClass]
+    public class DataServiceTest
+    {
+        DataService ds = new DataService();
+        string filePath = @"C:\Users\seemoon\Desktop\projectX.csv";
+        public static string[,] LoadFromFileData(string filePath)
+        {
+            string fileData = File.ReadAllText(filePath);
+            fileData = fileData.Replace('\n', '\r');
+            string[] lines = fileData.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            int rows = lines.Length;
+            int columns = lines[0].Split(';').Length;
+            string[,] arrayValues = new string[rows, columns];
+
+            for (int r = 0; r < rows; r++)
+            {
+                string[] line_r = lines[r].Split(';');
+                for (int c = 0; c < columns; c++)
+                {
+                    arrayValues[r, c] = line_r[c];
+                }
+            }
+
+            return arrayValues;
+        }
+        [TestMethod]
+        
+        public void CheckMax()
+        {
+            double wait = 900;
+            double res = ds.Max(LoadFromFileData(filePath));
+            Assert.AreEqual(wait, res);
+        }
+        [TestMethod]
+
+        public void CheckMin()
+        {
+            double wait = 150;
+            double res = ds.Min(LoadFromFileData(filePath));
+            Assert.AreEqual(wait, res);
+        }
+        [TestMethod]
+
+        public void CheckSred()
+        {
+            double wait = 468.75;
+            double res = ds.Sred(LoadFromFileData(filePath));
+            Assert.AreEqual(wait, res);
+        }
+    }
+}
+библиотека классов проекта:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using tyuiu.cources.programming.interfaces.Sprint6;
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2.Lib
+{
+    public class DataService
+    {
+        public double Max(string[,] path)
+        {
+            double max = 0;
+            int columnIndex = 6;
+            for (int i = 1; i < path.GetLength(0); i++)
+            {
+                if (Convert.ToDouble(path[i, columnIndex]) > max)
+                {
+                    max = Convert.ToDouble(path[i, columnIndex]);
+                }
+            }
+            return max;
+        }
+        public double Min(string[,] path)
+        {
+            double min = 1000000000000000;
+            int columnIndex = 6;
+            for (int i = 1; i < path.GetLength(0); i++)
+            {
+                if (Convert.ToDouble(path[i, columnIndex]) < min)
+                {
+                    min = Convert.ToDouble(path[i, columnIndex]);
+                }
+            }
+            return min;
+        }
+        public double Sred(string[,] path)
+        {
+            double sum = 0;
+            
+            for (int i = 1; i < path.GetLength(0); i++)
+            {
+                sum += Convert.ToDouble(path[i, 6]);
+            }
+            double average = sum / (path.GetLength(0) - 1);
+            return Math.Round(average, 2);
+        }
+        
+    }
+}
+WindowsForms FormAbout.Designer:
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    partial class FormAbout
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAbout));
+            this.buttonOk_ISI = new System.Windows.Forms.Button();
+            this.pictureBoxAva_ISI = new System.Windows.Forms.PictureBox();
+            this.labelHelp_ISI = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAva_ISI)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // buttonOk_ISI
+            // 
+            this.buttonOk_ISI.Location = new System.Drawing.Point(460, 254);
+            this.buttonOk_ISI.Name = "buttonOk_ISI";
+            this.buttonOk_ISI.Size = new System.Drawing.Size(75, 23);
+            this.buttonOk_ISI.TabIndex = 0;
+            this.buttonOk_ISI.Text = "Ок";
+            this.buttonOk_ISI.UseVisualStyleBackColor = true;
+            this.buttonOk_ISI.Click += new System.EventHandler(this.buttonOk_ISI_Click);
+            // 
+            // pictureBoxAva_ISI
+            // 
+            this.pictureBoxAva_ISI.Image = global::Tyuiu.IvanovSI.Sprint7.Project0.V2.Properties.Resources._2a09gHNnzys1;
+            this.pictureBoxAva_ISI.Location = new System.Drawing.Point(23, 63);
+            this.pictureBoxAva_ISI.Name = "pictureBoxAva_ISI";
+            this.pictureBoxAva_ISI.Size = new System.Drawing.Size(206, 214);
+            this.pictureBoxAva_ISI.TabIndex = 1;
+            this.pictureBoxAva_ISI.TabStop = false;
+            // 
+            // labelHelp_ISI
+            // 
+            this.labelHelp_ISI.AutoSize = true;
+            this.labelHelp_ISI.Location = new System.Drawing.Point(261, 65);
+            this.labelHelp_ISI.Name = "labelHelp_ISI";
+            this.labelHelp_ISI.Size = new System.Drawing.Size(284, 117);
+            this.labelHelp_ISI.TabIndex = 2;
+            this.labelHelp_ISI.Text = resources.GetString("labelHelp_ISI.Text");
+            // 
+            // FormAbout
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
+            this.ClientSize = new System.Drawing.Size(558, 304);
+            this.Controls.Add(this.labelHelp_ISI);
+            this.Controls.Add(this.pictureBoxAva_ISI);
+            this.Controls.Add(this.buttonOk_ISI);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "FormAbout";
+            this.Resizable = false;
+            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Text = "О программе";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAva_ISI)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Button buttonOk_ISI;
+        private System.Windows.Forms.PictureBox pictureBoxAva_ISI;
+        private System.Windows.Forms.Label labelHelp_ISI;
+    }
+}
+FormAbout.cs:
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MetroFramework.Forms;
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    public partial class FormAbout : MetroForm
+    {
+        public FormAbout()
+        {
+            InitializeComponent();
+        }
+
+        private void buttonOk_ISI_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+}
+FormAdd.Designer:
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    partial class FormAdd
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.buttonAdd_ISI = new System.Windows.Forms.Button();
+            this.textBoxTelPostavk_ISI = new System.Windows.Forms.TextBox();
+            this.labelName_ISI = new System.Windows.Forms.Label();
+            this.labelTel_ISI = new System.Windows.Forms.Label();
+            this.labelLocation_ISI = new System.Windows.Forms.Label();
+            this.labelTelStore_ISI = new System.Windows.Forms.Label();
+            this.labelFIO_ISI = new System.Windows.Forms.Label();
+            this.labelTelPostavk_ISI = new System.Windows.Forms.Label();
+            this.labelPrice_ISI = new System.Windows.Forms.Label();
+            this.textBoxName_ISI = new System.Windows.Forms.TextBox();
+            this.textBoxTel_ISI = new System.Windows.Forms.TextBox();
+            this.textBoxLocation_ISI = new System.Windows.Forms.TextBox();
+            this.textBoxTelStore_ISI = new System.Windows.Forms.TextBox();
+            this.textBoxFIO_ISI = new System.Windows.Forms.TextBox();
+            this.textBoxPrice_ISI = new System.Windows.Forms.TextBox();
+            this.SuspendLayout();
+            // 
+            // buttonAdd_ISI
+            // 
+            this.buttonAdd_ISI.Location = new System.Drawing.Point(908, 192);
+            this.buttonAdd_ISI.Name = "buttonAdd_ISI";
+            this.buttonAdd_ISI.Size = new System.Drawing.Size(75, 23);
+            this.buttonAdd_ISI.TabIndex = 0;
+            this.buttonAdd_ISI.Text = "Добавить";
+            this.buttonAdd_ISI.UseVisualStyleBackColor = true;
+            this.buttonAdd_ISI.Click += new System.EventHandler(this.buttonAdd_ISI_Click);
+            // 
+            // textBoxTelPostavk_ISI
+            // 
+            this.textBoxTelPostavk_ISI.Location = new System.Drawing.Point(713, 123);
+            this.textBoxTelPostavk_ISI.Name = "textBoxTelPostavk_ISI";
+            this.textBoxTelPostavk_ISI.Size = new System.Drawing.Size(132, 20);
+            this.textBoxTelPostavk_ISI.TabIndex = 1;
+            // 
+            // labelName_ISI
+            // 
+            this.labelName_ISI.AutoSize = true;
+            this.labelName_ISI.Location = new System.Drawing.Point(20, 104);
+            this.labelName_ISI.Name = "labelName_ISI";
+            this.labelName_ISI.Size = new System.Drawing.Size(57, 13);
+            this.labelName_ISI.TabIndex = 2;
+            this.labelName_ISI.Text = "Название";
+            // 
+            // labelTel_ISI
+            // 
+            this.labelTel_ISI.AutoSize = true;
+            this.labelTel_ISI.Location = new System.Drawing.Point(158, 107);
+            this.labelTel_ISI.Name = "labelTel_ISI";
+            this.labelTel_ISI.Size = new System.Drawing.Size(41, 13);
+            this.labelTel_ISI.TabIndex = 2;
+            this.labelTel_ISI.Text = "Номер";
+            // 
+            // labelLocation_ISI
+            // 
+            this.labelLocation_ISI.AutoSize = true;
+            this.labelLocation_ISI.Location = new System.Drawing.Point(296, 104);
+            this.labelLocation_ISI.Name = "labelLocation_ISI";
+            this.labelLocation_ISI.Size = new System.Drawing.Size(38, 13);
+            this.labelLocation_ISI.TabIndex = 2;
+            this.labelLocation_ISI.Text = "Адрес";
+            // 
+            // labelTelStore_ISI
+            // 
+            this.labelTelStore_ISI.AutoSize = true;
+            this.labelTelStore_ISI.Location = new System.Drawing.Point(434, 104);
+            this.labelTelStore_ISI.Name = "labelTelStore_ISI";
+            this.labelTelStore_ISI.Size = new System.Drawing.Size(104, 13);
+            this.labelTelStore_ISI.TabIndex = 2;
+            this.labelTelStore_ISI.Text = "Телефон магазина";
+            // 
+            // labelFIO_ISI
+            // 
+            this.labelFIO_ISI.AutoSize = true;
+            this.labelFIO_ISI.Location = new System.Drawing.Point(572, 91);
+            this.labelFIO_ISI.Name = "labelFIO_ISI";
+            this.labelFIO_ISI.Size = new System.Drawing.Size(69, 26);
+            this.labelFIO_ISI.TabIndex = 2;
+            this.labelFIO_ISI.Text = "Фио\r\nпоставщика\r\n";
+            // 
+            // labelTelPostavk_ISI
+            // 
+            this.labelTelPostavk_ISI.AutoSize = true;
+            this.labelTelPostavk_ISI.Location = new System.Drawing.Point(710, 107);
+            this.labelTelPostavk_ISI.Name = "labelTelPostavk_ISI";
+            this.labelTelPostavk_ISI.Size = new System.Drawing.Size(117, 13);
+            this.labelTelPostavk_ISI.TabIndex = 2;
+            this.labelTelPostavk_ISI.Text = "Телефон поставщика\r\n";
+            // 
+            // labelPrice_ISI
+            // 
+            this.labelPrice_ISI.AutoSize = true;
+            this.labelPrice_ISI.Location = new System.Drawing.Point(848, 107);
+            this.labelPrice_ISI.Name = "labelPrice_ISI";
+            this.labelPrice_ISI.Size = new System.Drawing.Size(112, 13);
+            this.labelPrice_ISI.TabIndex = 2;
+            this.labelPrice_ISI.Text = "Стоимость поставки";
+           
+            // 
+            // textBoxName_ISI
+            // 
+            this.textBoxName_ISI.Location = new System.Drawing.Point(23, 123);
+            this.textBoxName_ISI.Name = "textBoxName_ISI";
+            this.textBoxName_ISI.Size = new System.Drawing.Size(132, 20);
+            this.textBoxName_ISI.TabIndex = 1;
+           
+            // 
+            // textBoxTel_ISI
+            // 
+            this.textBoxTel_ISI.Location = new System.Drawing.Point(161, 123);
+            this.textBoxTel_ISI.Name = "textBoxTel_ISI";
+            this.textBoxTel_ISI.Size = new System.Drawing.Size(132, 20);
+            this.textBoxTel_ISI.TabIndex = 1;
+            
+            // 
+            // textBoxLocation_ISI
+            // 
+            this.textBoxLocation_ISI.Location = new System.Drawing.Point(299, 123);
+            this.textBoxLocation_ISI.Name = "textBoxLocation_ISI";
+            this.textBoxLocation_ISI.Size = new System.Drawing.Size(132, 20);
+            this.textBoxLocation_ISI.TabIndex = 1;
+            
+            // 
+            // textBoxTelStore_ISI
+            // 
+            this.textBoxTelStore_ISI.Location = new System.Drawing.Point(437, 123);
+            this.textBoxTelStore_ISI.Name = "textBoxTelStore_ISI";
+            this.textBoxTelStore_ISI.Size = new System.Drawing.Size(132, 20);
+            this.textBoxTelStore_ISI.TabIndex = 1;
+        
+            // 
+            // textBoxFIO_ISI
+            // 
+            this.textBoxFIO_ISI.Location = new System.Drawing.Point(575, 123);
+            this.textBoxFIO_ISI.Name = "textBoxFIO_ISI";
+            this.textBoxFIO_ISI.Size = new System.Drawing.Size(132, 20);
+            this.textBoxFIO_ISI.TabIndex = 1;
+     
+            // 
+            // textBoxPrice_ISI
+            // 
+            this.textBoxPrice_ISI.Location = new System.Drawing.Point(851, 123);
+            this.textBoxPrice_ISI.Name = "textBoxPrice_ISI";
+            this.textBoxPrice_ISI.Size = new System.Drawing.Size(132, 20);
+            this.textBoxPrice_ISI.TabIndex = 1;
+            // 
+            // FormAdd
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1006, 241);
+            this.Controls.Add(this.labelPrice_ISI);
+            this.Controls.Add(this.labelTelPostavk_ISI);
+            this.Controls.Add(this.labelFIO_ISI);
+            this.Controls.Add(this.labelTelStore_ISI);
+            this.Controls.Add(this.labelLocation_ISI);
+            this.Controls.Add(this.labelTel_ISI);
+            this.Controls.Add(this.labelName_ISI);
+            this.Controls.Add(this.textBoxFIO_ISI);
+            this.Controls.Add(this.textBoxTelStore_ISI);
+            this.Controls.Add(this.textBoxLocation_ISI);
+            this.Controls.Add(this.textBoxTel_ISI);
+            this.Controls.Add(this.textBoxName_ISI);
+            this.Controls.Add(this.textBoxPrice_ISI);
+            this.Controls.Add(this.textBoxTelPostavk_ISI);
+            this.Controls.Add(this.buttonAdd_ISI);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Movable = false;
+            this.Name = "FormAdd";
+            this.Resizable = false;
+            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Text = "Добавление данных";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Button buttonAdd_ISI;
+        private System.Windows.Forms.TextBox textBoxTelPostavk_ISI;
+        private System.Windows.Forms.Label labelName_ISI;
+        private System.Windows.Forms.Label labelTel_ISI;
+        private System.Windows.Forms.Label labelLocation_ISI;
+        private System.Windows.Forms.Label labelTelStore_ISI;
+        private System.Windows.Forms.Label labelFIO_ISI;
+        private System.Windows.Forms.Label labelTelPostavk_ISI;
+        private System.Windows.Forms.Label labelPrice_ISI;
+        private System.Windows.Forms.TextBox textBoxName_ISI;
+        private System.Windows.Forms.TextBox textBoxTel_ISI;
+        private System.Windows.Forms.TextBox textBoxLocation_ISI;
+        private System.Windows.Forms.TextBox textBoxTelStore_ISI;
+        private System.Windows.Forms.TextBox textBoxFIO_ISI;
+        private System.Windows.Forms.TextBox textBoxPrice_ISI;
+    }
+}
+FormAdd.cs:
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MetroFramework.Forms;
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    public partial class FormAdd : MetroForm
+    {
+        public FormAdd()
+        {
+            InitializeComponent();
+        }
+
+        private void buttonAdd_ISI_Click(object sender, EventArgs e)
+        {
+            string[] rowData = new string[] { textBoxName_ISI.Text, textBoxTel_ISI.Text, textBoxLocation_ISI.Text, textBoxTelStore_ISI.Text, textBoxFIO_ISI.Text, textBoxTelPostavk_ISI.Text, textBoxPrice_ISI.Text };
+
+
+            
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+        public string[] GetRowData()
+        {
+            
+            return new string[] { textBoxName_ISI.Text, textBoxTel_ISI.Text, textBoxLocation_ISI.Text, textBoxTelStore_ISI.Text, textBoxFIO_ISI.Text, textBoxTelPostavk_ISI.Text, textBoxPrice_ISI.Text };
+
+        }
+
+
+
+    }
+}
+FormInfo.Designer:
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    partial class FormInfo
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInfo));
+            this.buttonClose_ISI = new System.Windows.Forms.Button();
+            this.textBoxInfo_ISI = new System.Windows.Forms.TextBox();
+            this.SuspendLayout();
+            // 
+            // buttonClose_ISI
+            // 
+            this.buttonClose_ISI.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonClose_ISI.Location = new System.Drawing.Point(702, 522);
+            this.buttonClose_ISI.Name = "buttonClose_ISI";
+            this.buttonClose_ISI.Size = new System.Drawing.Size(75, 23);
+            this.buttonClose_ISI.TabIndex = 0;
+            this.buttonClose_ISI.Text = "Ок";
+            this.buttonClose_ISI.UseVisualStyleBackColor = true;
+            this.buttonClose_ISI.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBoxInfo_ISI
+            // 
+            this.textBoxInfo_ISI.Location = new System.Drawing.Point(23, 63);
+            this.textBoxInfo_ISI.Multiline = true;
+            this.textBoxInfo_ISI.Name = "textBoxInfo_ISI";
+            this.textBoxInfo_ISI.ReadOnly = true;
+            this.textBoxInfo_ISI.Size = new System.Drawing.Size(754, 453);
+            this.textBoxInfo_ISI.TabIndex = 1;
+            this.textBoxInfo_ISI.Text = resources.GetString("textBoxInfo_ISI.Text");
+            // 
+            // FormInfo
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 568);
+            this.Controls.Add(this.textBoxInfo_ISI);
+            this.Controls.Add(this.buttonClose_ISI);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Movable = false;
+            this.Name = "FormInfo";
+            this.Resizable = false;
+            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Text = "Краткое руководство";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Button buttonClose_ISI;
+        private System.Windows.Forms.TextBox textBoxInfo_ISI;
+    }
+}
+FormsInfo.cs:
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MetroFramework.Forms;
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    public partial class FormInfo : MetroForm
+    {
+        public FormInfo()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            this.Close();
+        }
+    }
+}
+FormMain.Designer:
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    partial class FormMain
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.openFileDialog_ISI = new System.Windows.Forms.OpenFileDialog();
+            this.panelFunctions_ISI = new System.Windows.Forms.Panel();
+            this.groupBoxSearch_ISI = new System.Windows.Forms.GroupBox();
+            this.textBoxSearch_ISI = new System.Windows.Forms.TextBox();
+            this.buttonStat_ISI = new System.Windows.Forms.Button();
+            this.buttonSave_ISI = new System.Windows.Forms.Button();
+            this.panelGrid_ISI = new System.Windows.Forms.Panel();
+            this.groupBoxGrid_ISI = new System.Windows.Forms.GroupBox();
+            this.dataGridViewIn_ISI = new System.Windows.Forms.DataGridView();
+            this.saveFileDialog_ISI = new System.Windows.Forms.SaveFileDialog();
+            this.contextMenuStrip_ISI = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ценаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.поВозрастаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.поУбываниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.номерToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.поВозрастаниюToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.поУбываниюToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.адресМагазинаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.аЯToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.яАToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.фИОПоставщикаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.аЯToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.яАToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.metroToolTip_ISI = new MetroFramework.Components.MetroToolTip();
+            this.buttonAdd_ISI = new System.Windows.Forms.Button();
+            this.buttonSort_ISI = new System.Windows.Forms.Button();
+            this.buttonOpenFile_ISI = new System.Windows.Forms.Button();
+            this.buttonAboutProg_ISI = new System.Windows.Forms.Button();
+            this.buttonHelp_ISI = new System.Windows.Forms.Button();
+            this.panelFunctions_ISI.SuspendLayout();
+            this.groupBoxSearch_ISI.SuspendLayout();
+            this.panelGrid_ISI.SuspendLayout();
+            this.groupBoxGrid_ISI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewIn_ISI)).BeginInit();
+            this.contextMenuStrip_ISI.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // openFileDialog_ISI
+            // 
+            this.openFileDialog_ISI.FileName = "openFileDialog1";
+            // 
+            // panelFunctions_ISI
+            // 
+            this.panelFunctions_ISI.Controls.Add(this.buttonAdd_ISI);
+            this.panelFunctions_ISI.Controls.Add(this.groupBoxSearch_ISI);
+            this.panelFunctions_ISI.Controls.Add(this.buttonStat_ISI);
+            this.panelFunctions_ISI.Controls.Add(this.buttonSort_ISI);
+            this.panelFunctions_ISI.Controls.Add(this.buttonOpenFile_ISI);
+            this.panelFunctions_ISI.Controls.Add(this.buttonAboutProg_ISI);
+            this.panelFunctions_ISI.Controls.Add(this.buttonHelp_ISI);
+            this.panelFunctions_ISI.Controls.Add(this.buttonSave_ISI);
+            this.panelFunctions_ISI.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelFunctions_ISI.Location = new System.Drawing.Point(20, 60);
+            this.panelFunctions_ISI.Name = "panelFunctions_ISI";
+            this.panelFunctions_ISI.Size = new System.Drawing.Size(894, 68);
+            this.panelFunctions_ISI.TabIndex = 3;
+            // 
+            // groupBoxSearch_ISI
+            // 
+            this.groupBoxSearch_ISI.Controls.Add(this.textBoxSearch_ISI);
+            this.groupBoxSearch_ISI.Location = new System.Drawing.Point(307, 3);
+            this.groupBoxSearch_ISI.Name = "groupBoxSearch_ISI";
+            this.groupBoxSearch_ISI.Size = new System.Drawing.Size(187, 46);
+            this.groupBoxSearch_ISI.TabIndex = 5;
+            this.groupBoxSearch_ISI.TabStop = false;
+            this.groupBoxSearch_ISI.Text = "Поиск";
+            // 
+            // textBoxSearch_ISI
+            // 
+            this.textBoxSearch_ISI.Location = new System.Drawing.Point(6, 19);
+            this.textBoxSearch_ISI.Name = "textBoxSearch_ISI";
+            this.textBoxSearch_ISI.Size = new System.Drawing.Size(175, 20);
+            this.textBoxSearch_ISI.TabIndex = 4;
+            this.textBoxSearch_ISI.TextChanged += new System.EventHandler(this.textBoxSearch_ISI_TextChanged);
+            // 
+            // buttonStat_ISI
+            // 
+            this.buttonStat_ISI.Location = new System.Drawing.Point(665, 3);
+            this.buttonStat_ISI.Name = "buttonStat_ISI";
+            this.buttonStat_ISI.Size = new System.Drawing.Size(116, 35);
+            this.buttonStat_ISI.TabIndex = 3;
+            this.buttonStat_ISI.Text = "Статистика";
+            this.metroToolTip_ISI.SetToolTip(this.buttonStat_ISI, "Выводит элементы статистики таблицы");
+            this.buttonStat_ISI.UseVisualStyleBackColor = true;
+            this.buttonStat_ISI.Click += new System.EventHandler(this.buttonStat_ISI_Click);
+            // 
+            // buttonSave_ISI
+            // 
+            this.buttonSave_ISI.Location = new System.Drawing.Point(543, 3);
+            this.buttonSave_ISI.Name = "buttonSave_ISI";
+            this.buttonSave_ISI.Size = new System.Drawing.Size(116, 35);
+            this.buttonSave_ISI.TabIndex = 2;
+            this.buttonSave_ISI.Text = "Сохранить ";
+            this.metroToolTip_ISI.SetToolTip(this.buttonSave_ISI, "Сохранить файл в формате CSV");
+            this.buttonSave_ISI.UseVisualStyleBackColor = true;
+            this.buttonSave_ISI.Click += new System.EventHandler(this.buttonSave_ISI_Click);
+            // 
+            // panelGrid_ISI
+            // 
+            this.panelGrid_ISI.Controls.Add(this.groupBoxGrid_ISI);
+            this.panelGrid_ISI.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelGrid_ISI.Location = new System.Drawing.Point(20, 128);
+            this.panelGrid_ISI.Name = "panelGrid_ISI";
+            this.panelGrid_ISI.Padding = new System.Windows.Forms.Padding(5);
+            this.panelGrid_ISI.Size = new System.Drawing.Size(894, 484);
+            this.panelGrid_ISI.TabIndex = 4;
+            // 
+            // groupBoxGrid_ISI
+            // 
+            this.groupBoxGrid_ISI.Controls.Add(this.dataGridViewIn_ISI);
+            this.groupBoxGrid_ISI.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxGrid_ISI.Location = new System.Drawing.Point(5, 5);
+            this.groupBoxGrid_ISI.Name = "groupBoxGrid_ISI";
+            this.groupBoxGrid_ISI.Padding = new System.Windows.Forms.Padding(5);
+            this.groupBoxGrid_ISI.Size = new System.Drawing.Size(884, 474);
+            this.groupBoxGrid_ISI.TabIndex = 0;
+            this.groupBoxGrid_ISI.TabStop = false;
+            this.groupBoxGrid_ISI.Text = "База данных";
+            // 
+            // dataGridViewIn_ISI
+            // 
+            this.dataGridViewIn_ISI.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewIn_ISI.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewIn_ISI.Location = new System.Drawing.Point(5, 18);
+            this.dataGridViewIn_ISI.Name = "dataGridViewIn_ISI";
+            this.dataGridViewIn_ISI.Size = new System.Drawing.Size(874, 451);
+            this.dataGridViewIn_ISI.TabIndex = 0;
+            // 
+            // contextMenuStrip_ISI
+            // 
+            this.contextMenuStrip_ISI.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ценаToolStripMenuItem,
+            this.номерToolStripMenuItem,
+            this.адресМагазинаToolStripMenuItem,
+            this.фИОПоставщикаToolStripMenuItem});
+            this.contextMenuStrip_ISI.Name = "contextMenuStrip_ISI";
+            this.contextMenuStrip_ISI.Size = new System.Drawing.Size(181, 92);
+            // 
+            // ценаToolStripMenuItem
+            // 
+            this.ценаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.поВозрастаниюToolStripMenuItem,
+            this.поУбываниюToolStripMenuItem});
+            this.ценаToolStripMenuItem.Name = "ценаToolStripMenuItem";
+            this.ценаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ценаToolStripMenuItem.Text = "Цена";
+            // 
+            // поВозрастаниюToolStripMenuItem
+            // 
+            this.поВозрастаниюToolStripMenuItem.Name = "поВозрастаниюToolStripMenuItem";
+            this.поВозрастаниюToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.поВозрастаниюToolStripMenuItem.Text = "По возрастанию";
+            this.поВозрастаниюToolStripMenuItem.Click += new System.EventHandler(this.поВозрастаниюToolStripMenuItem_Click);
+            // 
+            // поУбываниюToolStripMenuItem
+            // 
+            this.поУбываниюToolStripMenuItem.Name = "поУбываниюToolStripMenuItem";
+            this.поУбываниюToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.поУбываниюToolStripMenuItem.Text = "По убыванию";
+            this.поУбываниюToolStripMenuItem.Click += new System.EventHandler(this.поУбываниюToolStripMenuItem_Click);
+            // 
+            // номерToolStripMenuItem
+            // 
+            this.номерToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.поВозрастаниюToolStripMenuItem1,
+            this.поУбываниюToolStripMenuItem1});
+            this.номерToolStripMenuItem.Name = "номерToolStripMenuItem";
+            this.номерToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.номерToolStripMenuItem.Text = "Номер";
+            // 
+            // поВозрастаниюToolStripMenuItem1
+            // 
+            this.поВозрастаниюToolStripMenuItem1.Name = "поВозрастаниюToolStripMenuItem1";
+            this.поВозрастаниюToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
+            this.поВозрастаниюToolStripMenuItem1.Text = "По возрастанию";
+            this.поВозрастаниюToolStripMenuItem1.Click += new System.EventHandler(this.поВозрастаниюToolStripMenuItem1_Click);
+            // 
+            // поУбываниюToolStripMenuItem1
+            // 
+            this.поУбываниюToolStripMenuItem1.Name = "поУбываниюToolStripMenuItem1";
+            this.поУбываниюToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
+            this.поУбываниюToolStripMenuItem1.Text = "По убыванию";
+            this.поУбываниюToolStripMenuItem1.Click += new System.EventHandler(this.поУбываниюToolStripMenuItem1_Click);
+            // 
+            // адресМагазинаToolStripMenuItem
+            // 
+            this.адресМагазинаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.аЯToolStripMenuItem,
+            this.яАToolStripMenuItem});
+            this.адресМагазинаToolStripMenuItem.Name = "адресМагазинаToolStripMenuItem";
+            this.адресМагазинаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.адресМагазинаToolStripMenuItem.Text = "Название магазина";
+            // 
+            // аЯToolStripMenuItem
+            // 
+            this.аЯToolStripMenuItem.Name = "аЯToolStripMenuItem";
+            this.аЯToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
+            this.аЯToolStripMenuItem.Text = "А-Я";
+            this.аЯToolStripMenuItem.Click += new System.EventHandler(this.аЯToolStripMenuItem_Click);
+            // 
+            // яАToolStripMenuItem
+            // 
+            this.яАToolStripMenuItem.Name = "яАToolStripMenuItem";
+            this.яАToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
+            this.яАToolStripMenuItem.Text = "Я-А";
+            this.яАToolStripMenuItem.Click += new System.EventHandler(this.яАToolStripMenuItem_Click);
+            // 
+            // фИОПоставщикаToolStripMenuItem
+            // 
+            this.фИОПоставщикаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.аЯToolStripMenuItem1,
+            this.яАToolStripMenuItem1});
+            this.фИОПоставщикаToolStripMenuItem.Name = "фИОПоставщикаToolStripMenuItem";
+            this.фИОПоставщикаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.фИОПоставщикаToolStripMenuItem.Text = "ФИО поставщика";
+            // 
+            // аЯToolStripMenuItem1
+            // 
+            this.аЯToolStripMenuItem1.Name = "аЯToolStripMenuItem1";
+            this.аЯToolStripMenuItem1.Size = new System.Drawing.Size(94, 22);
+            this.аЯToolStripMenuItem1.Text = "А-Я";
+            this.аЯToolStripMenuItem1.Click += new System.EventHandler(this.аЯToolStripMenuItem1_Click);
+            // 
+            // яАToolStripMenuItem1
+            // 
+            this.яАToolStripMenuItem1.Name = "яАToolStripMenuItem1";
+            this.яАToolStripMenuItem1.Size = new System.Drawing.Size(94, 22);
+            this.яАToolStripMenuItem1.Text = "Я-А";
+            this.яАToolStripMenuItem1.Click += new System.EventHandler(this.яАToolStripMenuItem1_Click);
+            // 
+            // metroToolTip_ISI
+            // 
+            this.metroToolTip_ISI.Style = MetroFramework.MetroColorStyle.White;
+            this.metroToolTip_ISI.Theme = MetroFramework.MetroThemeStyle.Light;
+            // 
+            // buttonAdd_ISI
+            // 
+            this.buttonAdd_ISI.Image = global::Tyuiu.IvanovSI.Sprint7.Project0.V2.Properties.Resources.application_form_add1;
+            this.buttonAdd_ISI.Location = new System.Drawing.Point(157, 3);
+            this.buttonAdd_ISI.Name = "buttonAdd_ISI";
+            this.buttonAdd_ISI.Size = new System.Drawing.Size(49, 46);
+            this.buttonAdd_ISI.TabIndex = 6;
+            this.metroToolTip_ISI.SetToolTip(this.buttonAdd_ISI, "Добавление новых данных в таблицу");
+            this.buttonAdd_ISI.UseVisualStyleBackColor = true;
+            this.buttonAdd_ISI.Click += new System.EventHandler(this.buttonAdd_ISI_Click);
+            // 
+            // buttonSort_ISI
+            // 
+            this.buttonSort_ISI.Image = global::Tyuiu.IvanovSI.Sprint7.Project0.V2.Properties.Resources.table_sort;
+            this.buttonSort_ISI.Location = new System.Drawing.Point(102, 3);
+            this.buttonSort_ISI.Name = "buttonSort_ISI";
+            this.buttonSort_ISI.Size = new System.Drawing.Size(49, 46);
+            this.buttonSort_ISI.TabIndex = 2;
+            this.metroToolTip_ISI.SetToolTip(this.buttonSort_ISI, "Сортировка по столбцам таблицы");
+            this.buttonSort_ISI.UseVisualStyleBackColor = true;
+            this.buttonSort_ISI.Click += new System.EventHandler(this.buttonSort_ISI_Click);
+            // 
+            // buttonOpenFile_ISI
+            // 
+            this.buttonOpenFile_ISI.BackColor = System.Drawing.Color.Gainsboro;
+            this.buttonOpenFile_ISI.Image = global::Tyuiu.IvanovSI.Sprint7.Project0.V2.Properties.Resources.application_add;
+            this.buttonOpenFile_ISI.Location = new System.Drawing.Point(5, 3);
+            this.buttonOpenFile_ISI.Name = "buttonOpenFile_ISI";
+            this.buttonOpenFile_ISI.Size = new System.Drawing.Size(49, 46);
+            this.buttonOpenFile_ISI.TabIndex = 2;
+            this.metroToolTip_ISI.SetToolTip(this.buttonOpenFile_ISI, "Открывает файл формата CSV");
+            this.buttonOpenFile_ISI.UseVisualStyleBackColor = false;
+            this.buttonOpenFile_ISI.Click += new System.EventHandler(this.buttonOpenFile_ISI_Click);
+            // 
+            // buttonAboutProg_ISI
+            // 
+            this.buttonAboutProg_ISI.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAboutProg_ISI.Image = global::Tyuiu.IvanovSI.Sprint7.Project0.V2.Properties.Resources.information;
+            this.buttonAboutProg_ISI.Location = new System.Drawing.Point(787, 3);
+            this.buttonAboutProg_ISI.Name = "buttonAboutProg_ISI";
+            this.buttonAboutProg_ISI.Size = new System.Drawing.Size(49, 46);
+            this.buttonAboutProg_ISI.TabIndex = 2;
+            this.metroToolTip_ISI.SetToolTip(this.buttonAboutProg_ISI, "Краткое руководство по использованию программы");
+            this.buttonAboutProg_ISI.UseVisualStyleBackColor = true;
+            this.buttonAboutProg_ISI.Click += new System.EventHandler(this.buttonAboutProg_ISI_Click);
+            // 
+            // buttonHelp_ISI
+            // 
+            this.buttonHelp_ISI.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonHelp_ISI.Image = global::Tyuiu.IvanovSI.Sprint7.Project0.V2.Properties.Resources.help;
+            this.buttonHelp_ISI.Location = new System.Drawing.Point(842, 3);
+            this.buttonHelp_ISI.Name = "buttonHelp_ISI";
+            this.buttonHelp_ISI.Size = new System.Drawing.Size(49, 46);
+            this.buttonHelp_ISI.TabIndex = 2;
+            this.metroToolTip_ISI.SetToolTip(this.buttonHelp_ISI, "О программе");
+            this.buttonHelp_ISI.UseVisualStyleBackColor = true;
+            this.buttonHelp_ISI.Click += new System.EventHandler(this.buttonHelp_ISI_Click);
+            // 
+            // FormMain
+            // 
+            this.ClientSize = new System.Drawing.Size(934, 632);
+            this.Controls.Add(this.panelGrid_ISI);
+            this.Controls.Add(this.panelFunctions_ISI);
+            this.Name = "FormMain";
+            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Text = "Сеть магазинов";
+            this.Load += new System.EventHandler(this.FormMain_Load);
+            this.panelFunctions_ISI.ResumeLayout(false);
+            this.groupBoxSearch_ISI.ResumeLayout(false);
+            this.groupBoxSearch_ISI.PerformLayout();
+            this.panelGrid_ISI.ResumeLayout(false);
+            this.groupBoxGrid_ISI.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewIn_ISI)).EndInit();
+            this.contextMenuStrip_ISI.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+        private System.Windows.Forms.Button buttonHelp_ISI;
+        private System.Windows.Forms.OpenFileDialog openFileDialog_ISI;
+        private System.Windows.Forms.Panel panelFunctions_ISI;
+        private System.Windows.Forms.Button buttonSave_ISI;
+        private System.Windows.Forms.Panel panelGrid_ISI;
+        private System.Windows.Forms.GroupBox groupBoxGrid_ISI;
+        private System.Windows.Forms.DataGridView dataGridViewIn_ISI;
+        private System.Windows.Forms.Button buttonStat_ISI;
+        private System.Windows.Forms.Button buttonSort_ISI;
+        private System.Windows.Forms.Button buttonOpenFile_ISI;
+        private System.Windows.Forms.Button buttonAboutProg_ISI;
+        private System.Windows.Forms.TextBox textBoxSearch_ISI;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog_ISI;
+        private System.Windows.Forms.GroupBox groupBoxSearch_ISI;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip_ISI;
+        private System.Windows.Forms.ToolStripMenuItem ценаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem номерToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem адресМагазинаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem фИОПоставщикаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem поВозрастаниюToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem поУбываниюToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem поВозрастаниюToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem поУбываниюToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem аЯToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem яАToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem аЯToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem яАToolStripMenuItem1;
+        private MetroFramework.Components.MetroToolTip metroToolTip_ISI;
+        private System.Windows.Forms.Button buttonAdd_ISI;
+    }
+}
+FormMain.cs
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+using MetroFramework.Components;
+using MetroFramework.Forms;
+using Tyuiu.IvanovSI.Sprint7.Project0.V2.Lib;
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    public partial class FormMain : MetroForm
+    {
+        public FormMain()
+        {
+            InitializeComponent();
+        }
+        DataService ds = new DataService();
+
+
+
+
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+
+
+        }
+
+
+
+        private void buttonStat_ISI_Click(object sender, EventArgs e)
+        {
+                FormStat formStat = new FormStat();
+                formStat.ShowDialog();
+            
+        }
+
+        public static string[,] LoadFromFileData(string filePath)
+        {
+            string fileData = File.ReadAllText(filePath, Encoding.Default);
+            fileData = fileData.Replace('\n', '\r');
+            string[] lines = fileData.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            int rows = lines.Length;
+            int columns = lines[0].Split(';').Length;
+            string[,] arrayValues = new string[rows, columns];
+
+            for (int r = 0; r < rows; r++)
+            {
+                string[] line_r = lines[r].Split(';');
+                for (int c = 0; c < columns; c++)
+                {
+                    arrayValues[r, c] = line_r[c];
+                }
+            }
+
+            return arrayValues;
+        }
+        private void LoadDataIntoDataGridView(string filePath)
+        {
+            
+            string[,] dataArray = LoadFromFileData(filePath);
+
+            
+            dataGridViewIn_ISI.Rows.Clear();
+            dataGridViewIn_ISI.Columns.Clear();
+
+           
+            for (int i = 0; i < dataArray.GetLength(1); i++)
+            {
+                dataGridViewIn_ISI.Columns.Add("", dataArray[0, i]);
+            }
+
+            
+            for (int i = 1; i < dataArray.GetLength(0); i++)
+            {
+                List<string> rowData = new List<string>();
+                for (int j = 0; j < dataArray.GetLength(1); j++)
+                {
+                    rowData.Add(dataArray[i, j]);
+                }
+                dataGridViewIn_ISI.Rows.Add(rowData.ToArray());
+            }
+        }
+        private void buttonHelp_ISI_Click(object sender, EventArgs e)
+        {
+            FormAbout formAbout = new FormAbout();
+            formAbout.ShowDialog();
+        }
+
+        private void buttonOpenFile_ISI_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog_ISI = new OpenFileDialog();
+            openFileDialog_ISI.Filter = "csv Files|*.csv"; 
+            if (openFileDialog_ISI.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog_ISI.FileName;
+
+                
+                LoadDataIntoDataGridView(filePath);
+
+            }
+        }
+
+        private void buttonSave_ISI_Click(object sender, EventArgs e)
+        {
+            saveFileDialog_ISI.FileName = "OutPutMagaz.csv";
+            saveFileDialog_ISI.InitialDirectory = Directory.GetCurrentDirectory();
+            saveFileDialog_ISI.ShowDialog();
+
+            string path = saveFileDialog_ISI.FileName;
+
+            FileInfo fileInfo = new FileInfo(path);
+            bool fileExists = fileInfo.Exists;
+            if (fileExists)
+            {
+                File.Delete(path);
+            }
+
+            int rows = dataGridViewIn_ISI.RowCount;
+            int columns = dataGridViewIn_ISI.ColumnCount;
+
+            string str = "Название;Номер;Адрес;Телефон магазина;Фио поставщика;Телефон поставщика;Стоимость поставки\n";
+            for (int i = 0; i < rows - 1; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (j != columns - 1)
+                    {
+                        str = str + dataGridViewIn_ISI.Rows[i].Cells[j].Value + ";";
+                    }
+                    else
+                    {
+                        str = str + dataGridViewIn_ISI.Rows[i].Cells[j].Value;
+                    }
+                }
+                File.AppendAllText(path, str + Environment.NewLine,Encoding.Default);
+                str = "";
+            }
+
+            DialogResult dialogres = MessageBox.Show("Файл " + path + " сохранен успешно!\nОткрыть его в блокноте?", "Сообщение", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+            if (dialogres == DialogResult.Yes)
+            {
+                System.Diagnostics.Process txt = new System.Diagnostics.Process();
+                txt.StartInfo.FileName = "notepad.exe";
+                txt.StartInfo.Arguments = path;
+                txt.Start();
+            }
+        }
+
+        private void textBoxSearch_ISI_TextChanged(object sender, EventArgs e)
+        {
+            string searchValue = textBoxSearch_ISI.Text.ToLower();
+
+            foreach (DataGridViewRow row in dataGridViewIn_ISI.Rows)
+            {
+                if (row.IsNewRow) continue; 
+
+                bool found = false;
+
+                for (int j = 0; j < dataGridViewIn_ISI.Columns.Count; j++)
+                {
+                    if (row.Cells[j].Value != null && row.Cells[j].Value.ToString().ToLower().Contains(searchValue))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                row.Visible = found;
+            }
+        }
+
+        private void buttonSort_ISI_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip_ISI.Show(buttonSort_ISI, 1, buttonSort_ISI.Height);
+        }
+
+        private void поВозрастаниюToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            dataGridViewIn_ISI.Sort(dataGridViewIn_ISI.Columns[6], ListSortDirection.Ascending);
+        }
+
+        private void поУбываниюToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridViewIn_ISI.Columns[6].SortMode = DataGridViewColumnSortMode.Programmatic;
+            dataGridViewIn_ISI.Sort(dataGridViewIn_ISI.Columns[6], ListSortDirection.Descending);
+        }
+
+        private void поВозрастаниюToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridViewIn_ISI.Rows.Count - 1; i++)
+            {
+                for (int j = i + 1; j < dataGridViewIn_ISI.Rows.Count; j++)
+                {
+                    if (dataGridViewIn_ISI.Rows[i].Cells[1].Value != null && dataGridViewIn_ISI.Rows[j].Cells[1].Value != null)
+                    {
+                        if (Convert.ToDouble(dataGridViewIn_ISI.Rows[i].Cells[1].Value) > Convert.ToDouble(dataGridViewIn_ISI.Rows[j].Cells[1].Value))
+                        {
+                            
+                            for (int k = 0; k < dataGridViewIn_ISI.Columns.Count; k++)
+                            {
+                                object temp = dataGridViewIn_ISI.Rows[i].Cells[k].Value;
+                                dataGridViewIn_ISI.Rows[i].Cells[k].Value = dataGridViewIn_ISI.Rows[j].Cells[k].Value;
+                                dataGridViewIn_ISI.Rows[j].Cells[k].Value = temp;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void поУбываниюToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridViewIn_ISI.Rows.Count - 1; i++)
+            {
+                for (int j = i + 1; j < dataGridViewIn_ISI.Rows.Count; j++)
+                {
+                    if (dataGridViewIn_ISI.Rows[i].Cells[1].Value != null && dataGridViewIn_ISI.Rows[j].Cells[1].Value != null)
+                    {
+                        if (Convert.ToDouble(dataGridViewIn_ISI.Rows[i].Cells[1].Value) < Convert.ToDouble(dataGridViewIn_ISI.Rows[j].Cells[1].Value))
+                        {
+                            
+                            for (int k = 0; k < dataGridViewIn_ISI.Columns.Count; k++)
+                            {
+                                object temp = dataGridViewIn_ISI.Rows[i].Cells[k].Value;
+                                dataGridViewIn_ISI.Rows[i].Cells[k].Value = dataGridViewIn_ISI.Rows[j].Cells[k].Value;
+                                dataGridViewIn_ISI.Rows[j].Cells[k].Value = temp;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void аЯToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridViewIn_ISI.Sort(dataGridViewIn_ISI.Columns[0], ListSortDirection.Ascending);
+        }
+
+        private void яАToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridViewIn_ISI.Sort(dataGridViewIn_ISI.Columns[0], ListSortDirection.Descending);
+        }
+
+        private void аЯToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            dataGridViewIn_ISI.Sort(dataGridViewIn_ISI.Columns[4], ListSortDirection.Ascending);
+        }
+
+        private void яАToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            dataGridViewIn_ISI.Sort(dataGridViewIn_ISI.Columns[4], ListSortDirection.Descending);
+        }
+
+        private void buttonAboutProg_ISI_Click(object sender, EventArgs e)
+        {
+            FormInfo formInfo = new FormInfo();
+            formInfo.ShowDialog();
+        }
+
+        private void buttonAdd_ISI_Click(object sender, EventArgs e)
+        {
+            FormAdd addDataForm = new FormAdd();
+            if (addDataForm.ShowDialog() == DialogResult.OK)
+            {
+                
+                string[] rowData = addDataForm.GetRowData();
+
+                
+                dataGridViewIn_ISI.Rows.Add(rowData);
+            }
+        }
+    }
+}
+FormStat.Designer:
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    partial class FormStat
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.buttonOk_ISI = new System.Windows.Forms.Button();
+            this.textBoxMax_ISI = new System.Windows.Forms.TextBox();
+            this.textBoxMin_ISI = new System.Windows.Forms.TextBox();
+            this.textBoxMid_ISI = new System.Windows.Forms.TextBox();
+            this.labelMax_ISI = new System.Windows.Forms.Label();
+            this.labelMin_ISI = new System.Windows.Forms.Label();
+            this.labelMid_ISI = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // buttonOk_ISI
+            // 
+            this.buttonOk_ISI.Location = new System.Drawing.Point(184, 167);
+            this.buttonOk_ISI.Name = "buttonOk_ISI";
+            this.buttonOk_ISI.Size = new System.Drawing.Size(75, 23);
+            this.buttonOk_ISI.TabIndex = 0;
+            this.buttonOk_ISI.Text = "Ok";
+            this.buttonOk_ISI.UseVisualStyleBackColor = true;
+            this.buttonOk_ISI.Click += new System.EventHandler(this.buttonOk_ISI_Click);
+            // 
+            // textBoxMax_ISI
+            // 
+            this.textBoxMax_ISI.Location = new System.Drawing.Point(22, 79);
+            this.textBoxMax_ISI.Name = "textBoxMax_ISI";
+            this.textBoxMax_ISI.Size = new System.Drawing.Size(121, 20);
+            this.textBoxMax_ISI.TabIndex = 1;
+            // 
+            // textBoxMin_ISI
+            // 
+            this.textBoxMin_ISI.Location = new System.Drawing.Point(22, 124);
+            this.textBoxMin_ISI.Name = "textBoxMin_ISI";
+            this.textBoxMin_ISI.Size = new System.Drawing.Size(121, 20);
+            this.textBoxMin_ISI.TabIndex = 1;
+            // 
+            // textBoxMid_ISI
+            // 
+            this.textBoxMid_ISI.Location = new System.Drawing.Point(22, 167);
+            this.textBoxMid_ISI.Name = "textBoxMid_ISI";
+            this.textBoxMid_ISI.Size = new System.Drawing.Size(121, 20);
+            this.textBoxMid_ISI.TabIndex = 1;
+            // 
+            // labelMax_ISI
+            // 
+            this.labelMax_ISI.AutoSize = true;
+            this.labelMax_ISI.Location = new System.Drawing.Point(23, 60);
+            this.labelMax_ISI.Name = "labelMax_ISI";
+            this.labelMax_ISI.Size = new System.Drawing.Size(134, 13);
+            this.labelMax_ISI.TabIndex = 2;
+            this.labelMax_ISI.Text = "Максимальное значение";
+            // 
+            // labelMin_ISI
+            // 
+            this.labelMin_ISI.AutoSize = true;
+            this.labelMin_ISI.Location = new System.Drawing.Point(23, 108);
+            this.labelMin_ISI.Name = "labelMin_ISI";
+            this.labelMin_ISI.Size = new System.Drawing.Size(128, 13);
+            this.labelMin_ISI.TabIndex = 2;
+            this.labelMin_ISI.Text = "Минимальное значение";
+            // 
+            // labelMid_ISI
+            // 
+            this.labelMid_ISI.AutoSize = true;
+            this.labelMid_ISI.Location = new System.Drawing.Point(23, 151);
+            this.labelMid_ISI.Name = "labelMid_ISI";
+            this.labelMid_ISI.Size = new System.Drawing.Size(100, 13);
+            this.labelMid_ISI.TabIndex = 2;
+            this.labelMid_ISI.Text = "Среднее значение";
+            // 
+            // FormStat
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(277, 206);
+            this.Controls.Add(this.labelMid_ISI);
+            this.Controls.Add(this.labelMin_ISI);
+            this.Controls.Add(this.labelMax_ISI);
+            this.Controls.Add(this.textBoxMid_ISI);
+            this.Controls.Add(this.textBoxMin_ISI);
+            this.Controls.Add(this.textBoxMax_ISI);
+            this.Controls.Add(this.buttonOk_ISI);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Movable = false;
+            this.Name = "FormStat";
+            this.Resizable = false;
+            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Text = "Статистика";
+            this.Load += new System.EventHandler(this.FormStat_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Button buttonOk_ISI;
+        private System.Windows.Forms.TextBox textBoxMax_ISI;
+        private System.Windows.Forms.TextBox textBoxMin_ISI;
+        private System.Windows.Forms.TextBox textBoxMid_ISI;
+        private System.Windows.Forms.Label labelMax_ISI;
+        private System.Windows.Forms.Label labelMin_ISI;
+        private System.Windows.Forms.Label labelMid_ISI;
+    }
+}
+FormStat.cs:
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MetroFramework.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using Tyuiu.IvanovSI.Sprint7.Project0.V2.Lib;
+using System.IO;
+namespace Tyuiu.IvanovSI.Sprint7.Project0.V2
+{
+    public partial class FormStat : MetroForm
+    {
+        
+        public FormStat()
+        {
+            InitializeComponent();
+        }
+        public static string[,] LoadFromFileData(string filePath)
+        {
+            string fileData = File.ReadAllText(filePath);
+            fileData = fileData.Replace('\n', '\r');
+            string[] lines = fileData.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            int rows = lines.Length;
+            int columns = lines[0].Split(';').Length;
+            string[,] arrayValues = new string[rows, columns];
+
+            for (int r = 0; r < rows; r++)
+            {
+                string[] line_r = lines[r].Split(';');
+                for (int c = 0; c < columns; c++)
+                {
+                    arrayValues[r, c] = line_r[c];
+                }
+            }
+
+            return arrayValues;
+        }
+        
+        DataService ds = new DataService();
+        string filePath = $@"C:\Users\seemoon\Desktop\projectX.csv";
+        private void buttonOk_ISI_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        
+
+        private void FormStat_Load(object sender, EventArgs e)
+        {
+
+            
+
+            string[,] dataArray = LoadFromFileData(filePath);
+            textBoxMax_ISI.Text = Convert.ToString(ds.Max(dataArray));
+            textBoxMin_ISI.Text = Convert.ToString(ds.Min(dataArray));
+            textBoxMid_ISI.Text = Convert.ToString(ds.Sred(dataArray));
+            
+
+        }
+    }
+}
+
