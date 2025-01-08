@@ -6,7 +6,7 @@ namespace Tyuiu.NazarovaKH.Sprint7.Project.V1.Test
     public class DataServiceTest
     {
         DataService ds = new DataService();
-        string filePath = @"C:\ \";
+        string filePath = @"C:\DataSprint7\project.csv";
         public static string[,] LoadFromFileData(string filePath)
         {
             string fileData = File.ReadAllText(filePath);
@@ -51,7 +51,7 @@ namespace Tyuiu.NazarovaKH.Sprint7.Project.V1.Test
         public void CheckCountCars()
         {
             double res = 1;
-            double wait = ds.CountCars(LoadFromFileData(filePath), "Toyota");
+            double wait = ds.CountCars(LoadFromFileData(filePath), "BMW");
             Assert.AreEqual(wait, res);
         }
         [TestMethod]
