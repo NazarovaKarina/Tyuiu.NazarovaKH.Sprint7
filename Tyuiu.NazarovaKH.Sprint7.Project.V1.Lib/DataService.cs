@@ -6,92 +6,22 @@ namespace Tyuiu.NazarovaKH.Sprint7.Project.V1.Lib
 {
     public class DataService
     {
-        //поиск максимальной мощности автомобиля
-        public double MaxPower(string[,] data)
+        public int GetMaxValue(int[] array)
         {
-            double maxPower = 0;
-            int powerColumnIndex = 11; //мощность авто
-            for (int i = 1; i < data.GetLength(0); i++)
-            {
-                if (double.TryParse(data[i, powerColumnIndex], out double currentPower) && currentPower > maxPower)
-                {
-                    maxPower = currentPower;
-                }
-            }
-            return maxPower;
+            return array.Max();
         }
-        //поиск минимальной мощности автомобиля
-        public double MinPower(string[,] data)
+        public int GetMinValue(int[] array)
         {
-            double minPower = double.MaxValue;
-            int powerColumnIndex = 11; //мощность авто
-            for (int i = 1;i < data.GetLength(0); i++)
-            {
-                if (double.TryParse(data[i, powerColumnIndex], out double currentPower) && currentPower < minPower)
-                {
-                    minPower = currentPower;
-                }
-            }
-            return minPower;
+            return array.Min();
         }
-        //поиск средней мощности автомобиля
-        public double AveragePower(string[,] data)
+        public double GetAvgValue(int[] array)
         {
-            double sumPower = 0;
-            int count = 0;
-            int powerColumnIndex = 11;
-            for (int i = 1; i < data.GetLength(0); i++)
+            double res = 0;
+            for (int i = 0; i < array.Length; i++)
             {
-                if (double.TryParse(data[i, powerColumnIndex],out double currentPower))
-                {
-                    sumPower += currentPower;
-                    count++;
-                }
+                res += array[i];
             }
-            if (count > 0)
-            {
-                return Math.Round(sumPower / count, 2);
-            }
-            return 0;
-        }
-        // кол-во автомобилей определенной марки
-        public int CountCars(string[,] data, string carBrand)
-        {
-            int count = 0;
-            int carBrandColumnIndex = 10; //индекст столбца "марка авто"
-            for (int i = 1; i < data.GetLength(0); i++)
-            {
-                if (data[i, carBrandColumnIndex].Equals(carBrand, StringComparison.OrdinalIgnoreCase))
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
-        //список квалификаций механиков
-        public string[] GetMechaniQuals(string[,] data)
-        {
-            var uniqueQuals = new System.Collections.Generic.HashSet<string>();
-            int qualColumnIndex = 8;
-            for (int i = 1;i < data.GetLength(0); i++)
-            {
-                uniqueQuals.Add(data[i, qualColumnIndex]);
-            }
-            return uniqueQuals.ToArray();
-        }
-        // кол-во механиков с определенной квалификацией
-        public int CountMechanicsByQual(string[,] data, string qual)
-        {
-            int count = 0;
-            int qualColumnIndex = 8;
-            for (int i = 1; i < data.GetLength(0); i++)
-            {
-                if (data[i, qualColumnIndex].Equals(qual, StringComparison.OrdinalIgnoreCase))
-                {
-                    count++;
-                }
-            }
-            return count;
+            return Math.Round(res / array.Length - 1, 3);
         }
     }
 }

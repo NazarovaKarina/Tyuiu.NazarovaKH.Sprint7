@@ -6,59 +6,29 @@ namespace Tyuiu.NazarovaKH.Sprint7.Project.V1.Test
     public class DataServiceTest
     {
         DataService ds = new DataService();
-        string filePath = @"C:\DataSprint7\project.csv";
-        public static string[,] LoadFromFileData(string filePath)
-        {
-            string fileData = File.ReadAllText(filePath);
-            fileData = fileData.Replace('\n', '\r');
-            string[] lines = fileData.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
-            int rows = lines.Length;
-            int columns = lines[0].Split(';').Length;
-            string[,] arrayValues = new string[rows, columns];
 
-            for (int r = 0; r < rows; r++)
-            {
-                string[] line_r = lines[r].Split(';');
-                for (int c = 0; c < columns; c++)
-                {
-                    arrayValues[r, c] = line_r[c];
-                }
-            }
-            return arrayValues;
-        }
         [TestMethod]
-        public void CheckMaxPower()
+        public void GetMaxValue()
         {
-            double wait = 200;
-            double res = ds.MaxPower(LoadFromFileData(filePath));
+            int[] array = new int[] { 1, 2, 3, 4, 5 };
+            int res = ds.GetMaxValue(array);
+            int wait = 5;
             Assert.AreEqual(wait, res);
         }
         [TestMethod]
-        public void CheckMinPower()
+        public void GetMinValue()
         {
-            double wait = 150;
-            double res = ds.MinPower(LoadFromFileData(filePath));
+            int[] array = new int[] { 1, 2, 3, 4, 5 };
+            int res = ds.GetMinValue(array);
+            int wait = 1;
             Assert.AreEqual(wait, res);
         }
         [TestMethod]
-        public void CheckAveragePower()
+        public void GetAvgValue()
         {
-            double wait = 175;
-            double res = ds.AveragePower(LoadFromFileData(filePath));
-            Assert.AreEqual(wait, res);
-        }
-        [TestMethod]
-        public void CheckCountCars()
-        {
-            double res = 1;
-            double wait = ds.CountCars(LoadFromFileData(filePath), "BMW");
-            Assert.AreEqual(wait, res);
-        }
-        [TestMethod]
-        public void CheckCountMechanicsByQual()
-        {
-            double res = 1;
-            double wait = ds.CountMechanicsByQual(LoadFromFileData(filePath), "Автомеханик");
+            int[] array = new int[] { 1, 2, 3, 4, 5 };
+            double res = ds.GetAvgValue(array);
+            double wait = 3;
             Assert.AreEqual(wait, res);
         }
     }
